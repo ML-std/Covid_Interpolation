@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="470.0" prefWidth="710.0" styleClass="root" stylesheets="css.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <AnchorPane layoutX="416.0" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="185.0">
+        <VBox layoutX="-7.0" layoutY="1.0" prefHeight="470.0" prefWidth="299.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="297.0" text="Graphs For Default Values" />
+            <Button mnemonicParsing="false" onAction="#handleXYButton2Action" prefHeight="55.0" prefWidth="301.0" text="Direct Method" fx:id="xyButton2" />
+            <Button fx:id="squaredButton" mnemonicParsing="false" onAction="#handleSquaredButtonAction" prefHeight="55.0" prefWidth="297.0" text="Lagrange Method" />
+            <Button fx:id="squaredButton2" mnemonicParsing="false" onAction="#handleSquaredButton2Action" prefHeight="58.0" prefWidth="301.0" text="Newtons Divided Method" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="320.0" text="Graphs For Normal Input" />
+            <TextField prefHeight="25.0" prefWidth="284.0" promptText="Write how many days to calculate" />
+            <ChoiceBox prefHeight="25.0" prefWidth="305.0" value="2 minutes">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="2 minutes" />
+                        <String fx:value="5 minutes" />
+                        <String fx:value="15 minutes" />
+                    </FXCollections>
+                </items>
+            </ChoiceBox>
+            <DatePicker prefHeight="25.0" prefWidth="306.0" />
+            <Button mnemonicParsing="false" onAction="#handleXYButtonAction" prefHeight="43.0" prefWidth="330.0" text="y=x" fx:id="xyButton" />
+            <Button fx:id="cubedButton" mnemonicParsing="false" onAction="#handleCubedButtonAction" prefHeight="51.0" prefWidth="300.0" text="y=x^3" />
+            <Button fx:id="cubedButton2" mnemonicParsing="false" onAction="#handleCubedButton2Action" prefHeight="49.0" prefWidth="306.0" text="y=(x-3)^3-1" />
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#handleClearButtonAction" prefHeight="57.0" prefWidth="303.0" text="clear" />
+        </VBox>
+    </AnchorPane>
+    <AnchorPane  layoutX="-7.0" prefHeight="470.0" prefWidth="423.0" styleClass="">
+        <LineChart  styleClass="charts" fx:id="lineGraph" legendVisible="false" prefHeight="372.0" prefWidth="423.0" title="Covid" visible="false">
+            <xAxis>
+                <NumberAxis autoRanging="false" label="Days" minorTickCount="3" prefHeight="41.0" prefWidth="361.0" tickUnit="1" upperBound="10.0" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis autoRanging="false" label="Cases" prefHeight="317.0" prefWidth="32.0" side="LEFT" tickUnit="1" upperBound="10" />
+            </yAxis>
+            <cursor>
+                <Cursor fx:constant="CROSSHAIR" />
+            </cursor>
+        </LineChart>
+        <AreaChart styleClass="charts" fx:id="areaGraph" layoutX="7.0" legendVisible="false" prefHeight="391.0" prefWidth="416.0" title="Covid">
+            <xAxis>
+                <NumberAxis autoRanging="false" label="Days" minorTickCount="3" prefHeight="41.0" prefWidth="366.0" tickLabelFill="#390909" tickUnit="1" upperBound="10.0" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis autoRanging="false" label="Cases" prefHeight="317.0" prefWidth="32.0" side="LEFT" tickUnit="1" upperBound="10" />
+            </yAxis>
+            <cursor>
+                <Cursor fx:constant="CROSSHAIR" />
+            </cursor>
+        </AreaChart>
+        <Button fx:id="lineGraphButton" layoutX="27.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleLineGraphButtonAction" prefHeight="29.0" prefWidth="185.0" text="Line Graph" />
+        <Button layoutX="215.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleAreaGraphButtonAction" prefHeight="29.0" prefWidth="185.0" text="Area Graph" />
+    </AnchorPane>
+</AnchorPane>
