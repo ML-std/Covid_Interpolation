@@ -19,6 +19,7 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
@@ -35,6 +36,7 @@ public class Controller implements Initializable
 
     @FXML
     private Button areaGraphButton;
+
 
     @FXML
     private Button xyButton;
@@ -62,8 +64,8 @@ public class Controller implements Initializable
 
     @Override
     public void initialize(final URL url, final ResourceBundle rb) {
-        mathsGraph = new MyGraph(lineGraph, 10);
-        areaMathsGraph = new MyGraph(areaGraph, 10);
+        mathsGraph = new MyGraph(lineGraph, 50);
+        areaMathsGraph = new MyGraph(areaGraph, 50);
     }
 
     @FXML
@@ -77,49 +79,20 @@ public class Controller implements Initializable
         areaGraph.setVisible(true);
         lineGraph.setVisible(false);
     }
+    
 
-    @FXML
-    private void handleXYButtonAction(final ActionEvent event) {
-        plotLine(x -> x);
-    }
+    private void plotLine(Function<Double, Double> function, HashMap<Double,Double> hashMap) {
+        
 
-    private void plotLine(Function<Double, Double> function) {
         if (lineGraph.isVisible()) {
-            mathsGraph.plotLine(function);
+           
+            mathsGraph.plotLine(function,hashMap);
         } else {
-            areaMathsGraph.plotLine(function);
+            areaMathsGraph.plotLine(function,hashMap);
         }
     }
 
-    @FXML
-    private void handleXYButton2Action(final ActionEvent event) {
-        plotLine(x -> x - 3);
-    }
-
-    @FXML
-    private void handleSquaredButtonAction(final ActionEvent event) {
-        plotLine(x -> Math.pow(x, 2));
-    }
-
-    @FXML
-    private void handleSquaredButton2Action(final ActionEvent event) {
-        plotLine(x -> Math.pow(x, 2) + 2);
-    }
-
-    @FXML
-    private void handleCubedButtonAction(final ActionEvent event) {
-        plotLine(x -> Math.pow(x, 3));
-    }
-
-    @FXML
-    private void handleCubedButton2Action(final ActionEvent event) {
-        plotLine(x -> Math.pow(x - 3, 3) - 1);
-    }
-
-    @FXML
-    private void handleClearButtonAction(final ActionEvent event) {
-        clear();
-    }
+    
 
     private void clear() {
         if (lineGraph.isVisible()) {
@@ -127,5 +100,21 @@ public class Controller implements Initializable
         } else {
             areaMathsGraph.clear();
         }
+    }
+
+
+    public void DirectMethod(ActionEvent actionEvent) {
+        Newtons_Divided_Method.functionCalculate();
+        plotLine(Newtons_Divided_Method.function1, Newtons_Divided_Method.hashMap);
+    }
+
+    public void LagrangeMethod(ActionEvent actionEvent) {
+    }
+
+    public void NewtonsMethod(ActionEvent actionEvent) {
+    }
+
+    public void Clear(ActionEvent actionEvent) {
+        clear();
     }
 }

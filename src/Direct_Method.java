@@ -1,15 +1,7 @@
-import javafx.application.Application;
-import javafx.stage.Stage;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
-public class Direct_Method extends Application {
+public class Direct_Method{
 
 
-
-    @Override
-    public void start(Stage stage) {
-
-    }
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
