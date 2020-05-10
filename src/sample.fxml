@@ -1,43 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="704.0" prefWidth="1142.0" styleClass="root" stylesheets="css.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
-    <AnchorPane layoutX="679.0" layoutY="108.0" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="185.0" />
-    <AnchorPane layoutX="3.0" prefHeight="470.0" prefWidth="413.0" styleClass="">
-        <LineChart fx:id="lineGraph" legendVisible="false" prefHeight="372.0" prefWidth="423.0" styleClass="charts" title="Covid" visible="false">
-                <xAxis>
-                    <NumberAxis autoRanging="false" label="Days" minorTickCount="3" prefHeight="41.0" prefWidth="366.0" tickLabelFill="#390909" tickUnit="1" upperBound="10.0" />
-                </xAxis>
-                <yAxis>
-                    <NumberAxis autoRanging="false" label="Cases" minorTickCount="1" prefHeight="277.0" prefWidth="43.0" side="LEFT" tickLabelGap="1.0" tickUnit="1" upperBound="13.0" />
+<AnchorPane styleClass="root" stylesheets="css.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <AnchorPane layoutX="70.0" layoutY="14.0" prefHeight="735.0" prefWidth="1099.0">
+        <LineChart fx:id="lineGraph" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutX="7.0" layoutY="26.0" legendVisible="false" prefHeight="631.0" prefWidth="1049.0" styleClass="charts" title="Covid" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+            <xAxis>
+                <NumberAxis autoRanging="false" label="Days" minorTickCount="3" prefHeight="41.0" prefWidth="366.0" tickLabelFill="#390909" tickUnit="3.0" upperBound="50.0" fx:id="xLineAxis" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yLineAxis" autoRanging="false" label="Cases" minorTickCount="1" prefHeight="531.0" prefWidth="69.0" side="LEFT" tickLabelGap="1.0" tickUnit="800.0" upperBound="120000.0" />
             </yAxis>
             <cursor>
                 <Cursor fx:constant="CROSSHAIR" />
             </cursor>
         </LineChart>
-        <AreaChart fx:id="areaGraph" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutX="7.0" layoutY="26.0" legendVisible="false" prefHeight="589.0" prefWidth="671.0" styleClass="charts" title="Covid" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+        <Button layoutX="726.0" layoutY="677.0" mnemonicParsing="false" onAction="#handleAreaGraphButtonAction" prefHeight="29.0" prefWidth="185.0" text="Area Graph" />
+        <Button fx:id="lineGraphButton" layoutX="210.0" layoutY="677.0" mnemonicParsing="false" onAction="#handleLineGraphButtonAction" prefHeight="29.0" prefWidth="185.0" text="Line Graph" />
+        <AreaChart fx:id="areaGraph" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutX="7.0" layoutY="26.0" legendVisible="false" prefHeight="631.0" prefWidth="1049.0" styleClass="charts" title="Covid" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
             <xAxis>
-                <NumberAxis autoRanging="false" label="Days" minorTickCount="3" prefHeight="41.0" prefWidth="366.0" tickLabelFill="#390909" tickUnit="3.0" upperBound="50.0" />
+                <NumberAxis autoRanging="false" label="Days" minorTickCount="3" prefHeight="41.0" prefWidth="366.0" tickLabelFill="#390909" tickUnit="3.0" upperBound="50.0" fx:id="xAreaAxis" />
             </xAxis>
             <yAxis>
-                <NumberAxis autoRanging="false" label="Cases" minorTickCount="1" prefHeight="277.0" prefWidth="69.0" side="LEFT" tickLabelGap="1.0" tickUnit="1000.0" upperBound="120000.0" />
+                <NumberAxis fx:id="yAreaAxis" autoRanging="false" label="Cases" minorTickCount="1" prefHeight="531.0" prefWidth="69.0" side="LEFT" tickLabelGap="1.0" tickUnit="800.0" upperBound="120000.0" />
             </yAxis>
             <cursor>
                 <Cursor fx:constant="CROSSHAIR" />
             </cursor>
         </AreaChart>
     </AnchorPane>
-     <Button fx:id="lineGraphButton" layoutX="102.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleLineGraphButtonAction" prefHeight="29.0" prefWidth="185.0" text="Line Graph" />
-     <Button layoutX="376.0" layoutY="619.0" mnemonicParsing="false" onAction="#handleAreaGraphButtonAction" prefHeight="29.0" prefWidth="185.0" text="Area Graph" />
-     <VBox layoutX="826.0" layoutY="184.0" prefHeight="414.0" prefWidth="207.0">
+     <VBox layoutX="1160.0" layoutY="14.0" prefHeight="606.0" prefWidth="238.0" styleClass="VBox">
          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="297.0" text="Graphs For Default Values" />
          <Button mnemonicParsing="false" onAction="#DirectMethod" prefHeight="55.0" prefWidth="301.0" text="Direct Method" fx:id="xyButton2" />
          <Button fx:id="squaredButton" mnemonicParsing="false" onAction="#LagrangeMethod" prefHeight="55.0" prefWidth="297.0" text="Lagrange Method" />
          <Button fx:id="squaredButton2" mnemonicParsing="false" onAction="#NewtonsMethod" prefHeight="58.0" prefWidth="325.0" text="Newtons Divided Method" />
+         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="238.0" text="Graph For Inputs" />
+      <TextField promptText="X values" fx:id="xValues" />
+      <TextField fx:id="yValues" promptText="Y Values" />
+      <TextField fx:id="value" promptText="Value to calculate" />
+         <ChoiceBox fx:id="choiceBox" prefHeight="45.0" prefWidth="240.0" value="Direct Method">
+             <items>
+                 <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Direct Method" />
+                     <String fx:value="Lagrange Method" />
+                     <String fx:value="Newton's Divided Method" />
+                 </FXCollections>
+             </items>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         </ChoiceBox>
+         <Button fx:id="inputResultButton" mnemonicParsing="false" onAction="#ResultButton" prefHeight="51.0" prefWidth="238.0" text="Result" />
          <Button fx:id="clearButton" onAction="#Clear" prefHeight="58.0" prefWidth="301.0" text=" Clear" />
      </VBox>
+   <Button layoutX="1160.0" layoutY="620.0" mnemonicParsing="false" onAction="#FunctionButton" prefHeight="58.0" prefWidth="238.0" text="Show  Graph Function" />
 </AnchorPane>

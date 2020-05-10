@@ -1,6 +1,5 @@
 import javafx.scene.chart.XYChart;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -8,17 +7,17 @@ import java.util.function.Function;
 public class MyGraph {
 
     private XYChart<Double, Double> graph;
-    private double range;
+     double range;
 
     public MyGraph(final XYChart<Double, Double> graph, final double range) {
         this.graph = graph;
         this.range = range;
     }
 
-    public void plotLine(final Function<Double, Double> function, HashMap<Double,Double> data) {
+    public void plotLine(final Function<Double, Double> function, HashMap<Double, Double> data) {
         final XYChart.Series<Double, Double> series = new XYChart.Series<Double, Double>();
 
-        for (double x = -range; x <= range; x = x + 0.01) {
+        for (double x = -range; x <= range; x = x + 0.02) {
             plotPoint(x, function.apply(x), series);
 
 

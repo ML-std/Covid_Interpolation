@@ -89,3 +89,6 @@
 .charts .label{
     -fx-text-fill: red;
 }
+.VBox .label{
+    -fx-text-fill: green;
+}

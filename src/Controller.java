@@ -1,71 +1,71 @@
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Side;
-import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
-
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 import java.util.function.Function;
 
-public class Controller implements Initializable
-{
+public class Controller implements Initializable {
+    @FXML
+    private TextField value;
+    @FXML
+    private NumberAxis yAreaAxis;
+    @FXML
+    private NumberAxis yLineAxis;
+    @FXML
+    private Button inputResultButton;
+    @FXML
+    private TextField xValues;
+    @FXML
+    private TextField yValues;
     @FXML
     private LineChart<Double, Double> lineGraph;
 
     @FXML
     private AreaChart<Double, Double> areaGraph;
+    @FXML
+    private NumberAxis xAreaAxis;
+    @FXML
+    private NumberAxis xLineAxis;
+
+    @FXML
+    public ChoiceBox<String> choiceBox;
+
 
     @FXML
     private Button lineGraphButton;
-
     @FXML
     private Button areaGraphButton;
-
-
     @FXML
     private Button xyButton;
-
     @FXML
     private Button xyButton2;
-
     @FXML
     private Button squaredButton;
-
     @FXML
     private Button squaredButton2;
-
     @FXML
     private Button cubedButton;
-
     @FXML
     private Button cubedButton2;
-
     @FXML
     private Button clearButton;
-
     private MyGraph mathsGraph;
     private MyGraph areaMathsGraph;
 
     @Override
     public void initialize(final URL url, final ResourceBundle rb) {
-        mathsGraph = new MyGraph(lineGraph, 50);
-        areaMathsGraph = new MyGraph(areaGraph, 50);
+        mathsGraph = new MyGraph(lineGraph, 100);
+        areaMathsGraph = new MyGraph(areaGraph, 100);
     }
 
     @FXML
@@ -81,8 +81,7 @@ public class Controller implements Initializable
     }
     
 
-    private void plotLine(Function<Double, Double> function, HashMap<Double,Double> hashMap) {
-        
+    private void plotLine(Function<Double, Double> function, HashMap<Double, Double> hashMap) {
 
         if (lineGraph.isVisible()) {
            
@@ -104,17 +103,125 @@ public class Controller implements Initializable
 
 
     public void DirectMethod(ActionEvent actionEvent) {
-        Newtons_Divided_Method.functionCalculate();
-        plotLine(Newtons_Divided_Method.function1, Newtons_Divided_Method.hashMap);
+
     }
 
     public void LagrangeMethod(ActionEvent actionEvent) {
     }
 
     public void NewtonsMethod(ActionEvent actionEvent) {
+        Newtons_Divided_Method.hashMap.clear();
+        double valueToCalculate = 90;
+        double result;
+        double[] x = new double[]{3, 7, 11, 14, 17, 20, 25, 30, 35, 40, 42, 43};
+        double[][] y = new double[x.length][x.length];
+        y[0][0] = 1;
+        y[1][0] = 47;
+        y[2][0] = 670;
+        y[3][0] = 1529;
+        y[4][0] = 3629;
+        y[5][0] = 9217;
+        y[6][0] = 20921;
+        y[7][0] = 38226;
+        y[8][0] = 61049;
+        y[9][0] = 82329;
+        y[10][0] = 90980;
+        y[11][0] = 95591;
+        Newtons_Divided_Method.functionCalculate(x,y,90);
+
+        xAreaAxis.setUpperBound(100);
+        yAreaAxis.setUpperBound(200000);
+        xLineAxis.setUpperBound(100);
+        yLineAxis.setUpperBound(200000);
+        result = Newtons_Divided_Method.applyFormula(valueToCalculate,x,y,x.length);
+        plotLine(Newtons_Divided_Method.function1, Newtons_Divided_Method.hashMap);
+        showResult(valueToCalculate,result);
     }
 
     public void Clear(ActionEvent actionEvent) {
         clear();
     }
+
+    public void ResultButton(ActionEvent actionEvent) {
+        double result;
+        Newtons_Divided_Method.hashMap.clear();
+        StringTokenizer xTokenizer = new StringTokenizer(xValues.getText(), " ");
+        StringTokenizer yTokenizer = new StringTokenizer(yValues.getText(), " ");
+        int valueToCalculate = Integer.parseInt(value.getText());
+
+        double[] x = new double[xTokenizer.countTokens()];
+        double[][] y = new double[yTokenizer.countTokens()][yTokenizer.countTokens()];
+       // System.out.println(x.length);
+       // System.out.println(y.length);
+        if (y.length!=x.length){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning!");
+            alert.setHeaderText("Invalid Inputs");
+            alert.setContentText("Please reconsider your x and y inputs (eg x = {1, 1, 1) y = {1, 2, 3}" );
+            alert.showAndWait();}
+        else {
+            double tmpMaxX = 0;
+            double tmpMaxY = 0;
+
+            for (int i = 0; i < x.length; i++) {
+                x[i] = Integer.parseInt(xTokenizer.nextToken());
+                y[i][0] = Integer.parseInt(yTokenizer.nextToken());
+                System.out.println(x[i] + " " + y[i][0]);
+                if (i == 0) {
+                    tmpMaxX = x[0];
+                    tmpMaxY = y[0][0];
+                }
+                else {
+                    if (tmpMaxX<x[i]){
+                        tmpMaxX = x[i];
+                    }
+                    if (tmpMaxY<y[i][0]){
+                        tmpMaxY = y[i][0];
+                    }
+                }
+                if (tmpMaxX < valueToCalculate){
+                    tmpMaxX = valueToCalculate;
+                }
+
+
+                xAreaAxis.setUpperBound(tmpMaxX + 5);
+                yAreaAxis.setUpperBound(tmpMaxY + 5);
+                xLineAxis.setUpperBound(tmpMaxX + 5);
+                yLineAxis.setUpperBound(tmpMaxY + 5);
+
+            }
+
+        }
+
+            if (choiceBox.getValue().equals("Newton's Divided Method")){
+                Newtons_Divided_Method.functionCalculate(x,y,valueToCalculate);
+                result = Newtons_Divided_Method.applyFormula(valueToCalculate,x,y,x.length);
+                if (yAreaAxis.getUpperBound() < result){
+                    yAreaAxis.setUpperBound(result);
+                    yLineAxis.setUpperBound(result);
+                }
+                plotLine(Newtons_Divided_Method.function1,Newtons_Divided_Method.hashMap);
+                showResult(valueToCalculate,result);
+             }
+            }
+
+
+    public void FunctionButton(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Function for last Graph Drawn");
+        alert.setHeaderText("Function for this Graph");
+        alert.setContentText(Newtons_Divided_Method.stringFunction);
+
+        alert.showAndWait();
+
+    }
+    public void showResult(double valueToCalculate, double result){
+
+        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+        infoAlert.setTitle("Result");
+        infoAlert.setHeaderText("Result");
+        infoAlert.setContentText("For given X " + valueToCalculate + " the result is : " + result );
+        infoAlert.showAndWait();
+    }
 }
+
