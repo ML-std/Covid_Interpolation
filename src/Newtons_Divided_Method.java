@@ -1,16 +1,9 @@
-import jdk.nashorn.internal.ir.CallNode;
-import org.omg.PortableServer.IdUniquenessPolicy;
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.function.Function;
 
 public class Newtons_Divided_Method {
-    static HashMap<Double,Double> hashMap = new HashMap<>();
-    static Function<Double, Double> function1;
+    static HashMap<Double,Double> dividedMethodHashMap = new HashMap<>();
+    static Function<Double, Double> dividedMethodFunction;
 
 
     static String stringFunction;
@@ -78,11 +71,11 @@ public class Newtons_Divided_Method {
                 (applyFormula(value, x, y, n)));
 
         for (int i = 0; i<x.length;i++) {
-            hashMap.put(x[i],y[i][0]);
+            dividedMethodHashMap.put(x[i],y[i][0]);
             B[i] = y[0][i];
         }
-        hashMap.put(value,applyFormula(value, x, y, n));
-        function1 = aDouble -> {
+        dividedMethodHashMap.put(value,applyFormula(value, x, y, n));
+        dividedMethodFunction = aDouble -> {
             double function = 0 ;
             for (int i = 0; i< x.length; i++) {
                 double multiplier = 1;

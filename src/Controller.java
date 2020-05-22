@@ -8,6 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+
+import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -103,14 +105,17 @@ public class Controller implements Initializable {
 
 
     public void DirectMethod(ActionEvent actionEvent) {
-
+        Direct_Method.calculateLinear();
+        plotLine(Direct_Method.directMethodFunction,Direct_Method.directMethodHasHMap);
     }
 
     public void LagrangeMethod(ActionEvent actionEvent) {
+        Lagrange_Method.calculateLagrange();
+        plotLine(Lagrange_Method.lagrangeFunction,Lagrange_Method.lagrangeMethodHashMap);
     }
 
     public void NewtonsMethod(ActionEvent actionEvent) {
-        Newtons_Divided_Method.hashMap.clear();
+        Newtons_Divided_Method.dividedMethodHashMap.clear();
         double valueToCalculate = 90;
         double result;
         double[] x = new double[]{3, 7, 11, 14, 17, 20, 25, 30, 35, 40, 42, 43};
@@ -134,7 +139,7 @@ public class Controller implements Initializable {
         xLineAxis.setUpperBound(100);
         yLineAxis.setUpperBound(200000);
         result = Newtons_Divided_Method.applyFormula(valueToCalculate,x,y,x.length);
-        plotLine(Newtons_Divided_Method.function1, Newtons_Divided_Method.hashMap);
+        plotLine(Newtons_Divided_Method.dividedMethodFunction, Newtons_Divided_Method.dividedMethodHashMap);
         showResult(valueToCalculate,result);
     }
 
@@ -144,7 +149,7 @@ public class Controller implements Initializable {
 
     public void ResultButton(ActionEvent actionEvent) {
         double result;
-        Newtons_Divided_Method.hashMap.clear();
+        Newtons_Divided_Method.dividedMethodHashMap.clear();
         StringTokenizer xTokenizer = new StringTokenizer(xValues.getText(), " ");
         StringTokenizer yTokenizer = new StringTokenizer(yValues.getText(), " ");
         int valueToCalculate = Integer.parseInt(value.getText());
@@ -200,9 +205,26 @@ public class Controller implements Initializable {
                     yAreaAxis.setUpperBound(result);
                     yLineAxis.setUpperBound(result);
                 }
-                plotLine(Newtons_Divided_Method.function1,Newtons_Divided_Method.hashMap);
+                plotLine(Newtons_Divided_Method.dividedMethodFunction,Newtons_Divided_Method.dividedMethodHashMap);
                 showResult(valueToCalculate,result);
              }
+            else if (choiceBox.getValue().equals("Lagrange Method")){
+                Lagrange_Method.Data[] data = new Lagrange_Method.Data[x.length];
+                for (int i=0;i<x.length;i++){
+                    data[i] = new Lagrange_Method.Data(x[i],y[i][0]);
+                }
+            Lagrange_Method.interpolate(data,valueToCalculate);
+                plotLine(Lagrange_Method.lagrangeFunction,Lagrange_Method.lagrangeMethodHashMap);
+        }
+            else if (choiceBox.getValue().equals("Direct Method")){
+                double[] tmpY = new double[x.length];
+            for (int i = 0;i <x.length;i++){
+                tmpY[i] = y[i][0];
+            }
+                Direct_Method.interpLinear(x,tmpY,valueToCalculate);
+                plotLine(Direct_Method.directMethodFunction,Direct_Method.directMethodHasHMap);
+            }
+
             }
 
 
