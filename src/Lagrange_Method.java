@@ -5,8 +5,7 @@ public class Lagrange_Method  {
     public static Function<Double,Double> lagrangeFunction;
     public static HashMap<Double,Double> lagrangeMethodHashMap = new HashMap<>();
 
-    static class Data
-    {
+    static class Data {
         double x, y;
 
         public Data(double x, double y)
@@ -26,7 +25,16 @@ public class Lagrange_Method  {
     static double interpolate(Data[] f, double xi)
     {
 
-        double result = 0; // Initialize result
+        for (Data data:f) {
+            lagrangeMethodHashMap.put(data.x,data.y);
+        }
+        lagrangeFunction = aDouble -> LagrangeMethodCalculator(f, aDouble);
+
+        return LagrangeMethodCalculator(f, xi);
+    }
+
+    private static double LagrangeMethodCalculator(Data[] f, Double aDouble) {
+        double result1 = 0; // Initialize result
 
         for (int i = 0; i < f.length; i++)
         {
@@ -35,40 +43,15 @@ public class Lagrange_Method  {
             for (int j = 0; j < f.length; j++)
             {
                 if (j != i)
-                    term = term*(xi - f[j].x) / (f[i].x - f[j].x);
-
+                    term = term*(aDouble - f[j].x) / (f[i].x - f[j].x);
 
             }
-            System.out.println(term);
+
             // Add current term to result
-            result += term;
+            result1 += term;
+
         }
-        for (Data data:f) {
-            lagrangeMethodHashMap.put(data.x,data.y);
-        }
-        lagrangeFunction = aDouble ->{
-            double result1 = 0; // Initialize result
-
-            for (int i = 0; i < f.length; i++)
-            {
-                // Compute individual terms of above formula
-                double term = f[i].y;
-                for (int j = 0; j < f.length; j++)
-                {
-                    if (j != i)
-                        term = term*(aDouble - f[j].x) / (f[i].x - f[j].x);
-
-                }
-
-                // Add current term to result
-                result1 += term;
-
-            }
-            System.out.println(result1);
-            return  result1;
-        };
-        System.out.println(result);
-        return result;
+        return result1;
     }
 
     // Driver code

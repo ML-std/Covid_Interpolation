@@ -29,18 +29,7 @@ public class Direct_Method{
         double[] intercept = new double[x.length - 1];
 
         // Calculate the line equation (i.e. slope and intercept) between each point
-        for (int i = 0; i < x.length - 1; i++) {
-            dx[i] = x[i + 1] - x[i];
-            if (dx[i] == 0) {
-                throw new IllegalArgumentException("X must be monotonic. A duplicate " + "x-value was found");
-            }
-            if (dx[i] < 0) {
-                throw new IllegalArgumentException("X must be sorted");
-            }
-            dy[i] = y[i + 1] - y[i];
-            slope[i] = dy[i] / dx[i];
-            intercept[i] = y[i] - x[i] * slope[i];
-        }
+        directMethodCalculator(x, y, dx, dy, slope, intercept);
 
         // Perform the interpolation here
         double[] yi = new double[1];
@@ -60,18 +49,7 @@ public class Direct_Method{
             }
         }
         directMethodFunction = aDouble -> {
-            for (int i = 0; i < x.length - 1; i++) {
-                dx[i] = x[i + 1] - x[i];
-                if (dx[i] == 0) {
-                    throw new IllegalArgumentException("X must be monotonic. A duplicate " + "x-value was found");
-                }
-                if (dx[i] < 0) {
-                    throw new IllegalArgumentException("X must be sorted");
-                }
-                dy[i] = y[i + 1] - y[i];
-                slope[i] = dy[i] / dx[i];
-                intercept[i] = y[i] - x[i] * slope[i];
-            }
+            directMethodCalculator(x, y, dx, dy, slope, intercept);
             double yi1 =0;
             for (int i = 0; i < 1; i++) {
                 if ((aDouble > x[x.length - 1]) || (aDouble < x[0])) {
@@ -93,6 +71,21 @@ public class Direct_Method{
         };
 
         return yi;
+    }
+
+    private static void directMethodCalculator(double[] x, double[] y, double[] dx, double[] dy, double[] slope, double[] intercept) {
+        for (int i = 0; i < x.length - 1; i++) {
+            dx[i] = x[i + 1] - x[i];
+            if (dx[i] == 0) {
+                throw new IllegalArgumentException("X must be monotonic. A duplicate " + "x-value was found");
+            }
+            if (dx[i] < 0) {
+                throw new IllegalArgumentException("X must be sorted");
+            }
+            dy[i] = y[i + 1] - y[i];
+            slope[i] = dy[i] / dx[i];
+            intercept[i] = y[i] - x[i] * slope[i];
+        }
     }
 
     public static  BigDecimal[] interpLinear(BigDecimal[] x, BigDecimal[] y, BigDecimal[] xi) {
@@ -175,8 +168,5 @@ public class Direct_Method{
 
     }
 
-    public static void main(String[] args) {
-        calculateLinear();
-    }
 
 }

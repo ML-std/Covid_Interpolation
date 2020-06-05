@@ -8,8 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-
-import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -68,6 +66,7 @@ public class Controller implements Initializable {
     public void initialize(final URL url, final ResourceBundle rb) {
         mathsGraph = new MyGraph(lineGraph, 100);
         areaMathsGraph = new MyGraph(areaGraph, 100);
+        lineGraph.setVisible(true);
     }
 
     @FXML
@@ -116,7 +115,7 @@ public class Controller implements Initializable {
 
     public void NewtonsMethod(ActionEvent actionEvent) {
         Newtons_Divided_Method.dividedMethodHashMap.clear();
-        double valueToCalculate = 90;
+        double valueToCalculate = 37;
         double result;
         double[] x = new double[]{3, 7, 11, 14, 17, 20, 25, 30, 35, 40, 42, 43};
         double[][] y = new double[x.length][x.length];
@@ -132,12 +131,13 @@ public class Controller implements Initializable {
         y[9][0] = 82329;
         y[10][0] = 90980;
         y[11][0] = 95591;
-        Newtons_Divided_Method.functionCalculate(x,y,90);
+        Newtons_Divided_Method.functionCalculate(x,y,37);
 
-        xAreaAxis.setUpperBound(100);
-        yAreaAxis.setUpperBound(200000);
-        xLineAxis.setUpperBound(100);
-        yLineAxis.setUpperBound(200000);
+
+        xAreaAxis.setUpperBound(50);
+        yAreaAxis.setUpperBound(12000);
+        xLineAxis.setUpperBound(50);
+        yLineAxis.setUpperBound(120000);
         result = Newtons_Divided_Method.applyFormula(valueToCalculate,x,y,x.length);
         plotLine(Newtons_Divided_Method.dividedMethodFunction, Newtons_Divided_Method.dividedMethodHashMap);
         showResult(valueToCalculate,result);
@@ -177,10 +177,10 @@ public class Controller implements Initializable {
                     tmpMaxY = y[0][0];
                 }
                 else {
-                    if (tmpMaxX<x[i]){
+                    if (tmpMaxX < x[i]){
                         tmpMaxX = x[i];
                     }
-                    if (tmpMaxY<y[i][0]){
+                    if (tmpMaxY < y[i][0]){
                         tmpMaxY = y[i][0];
                     }
                 }
@@ -188,7 +188,8 @@ public class Controller implements Initializable {
                     tmpMaxX = valueToCalculate;
                 }
 
-
+                mathsGraph.range = tmpMaxX;
+                areaMathsGraph.range = tmpMaxY;
                 xAreaAxis.setUpperBound(tmpMaxX + 5);
                 yAreaAxis.setUpperBound(tmpMaxY + 5);
                 xLineAxis.setUpperBound(tmpMaxX + 5);
@@ -198,32 +199,34 @@ public class Controller implements Initializable {
 
         }
 
-            if (choiceBox.getValue().equals("Newton's Divided Method")){
-                Newtons_Divided_Method.functionCalculate(x,y,valueToCalculate);
-                result = Newtons_Divided_Method.applyFormula(valueToCalculate,x,y,x.length);
-                if (yAreaAxis.getUpperBound() < result){
+        switch (choiceBox.getValue()) {
+            case "Newton's Divided Method":
+                Newtons_Divided_Method.functionCalculate(x, y, valueToCalculate);
+                result = Newtons_Divided_Method.applyFormula(valueToCalculate, x, y, x.length);
+                if (yAreaAxis.getUpperBound() < result) {
                     yAreaAxis.setUpperBound(result);
                     yLineAxis.setUpperBound(result);
                 }
-                plotLine(Newtons_Divided_Method.dividedMethodFunction,Newtons_Divided_Method.dividedMethodHashMap);
-                showResult(valueToCalculate,result);
-             }
-            else if (choiceBox.getValue().equals("Lagrange Method")){
+                plotLine(Newtons_Divided_Method.dividedMethodFunction, Newtons_Divided_Method.dividedMethodHashMap);
+                showResult(valueToCalculate, result);
+                break;
+            case "Lagrange Method":
                 Lagrange_Method.Data[] data = new Lagrange_Method.Data[x.length];
-                for (int i=0;i<x.length;i++){
-                    data[i] = new Lagrange_Method.Data(x[i],y[i][0]);
+                for (int i = 0; i < x.length; i++) {
+                    data[i] = new Lagrange_Method.Data(x[i], y[i][0]);
                 }
-            Lagrange_Method.interpolate(data,valueToCalculate);
-                plotLine(Lagrange_Method.lagrangeFunction,Lagrange_Method.lagrangeMethodHashMap);
-        }
-            else if (choiceBox.getValue().equals("Direct Method")){
+                Lagrange_Method.interpolate(data, valueToCalculate);
+                plotLine(Lagrange_Method.lagrangeFunction, Lagrange_Method.lagrangeMethodHashMap);
+                break;
+            case "Direct Method":
                 double[] tmpY = new double[x.length];
-            for (int i = 0;i <x.length;i++){
-                tmpY[i] = y[i][0];
-            }
-                Direct_Method.interpLinear(x,tmpY,valueToCalculate);
-                plotLine(Direct_Method.directMethodFunction,Direct_Method.directMethodHasHMap);
-            }
+                for (int i = 0; i < x.length; i++) {
+                    tmpY[i] = y[i][0];
+                }
+                Direct_Method.interpLinear(x, tmpY, valueToCalculate);
+                plotLine(Direct_Method.directMethodFunction, Direct_Method.directMethodHasHMap);
+                break;
+        }
 
             }
 
