@@ -24,7 +24,6 @@ public class Lagrange_Method  {
 // represents the number of known data points
     static double interpolate(Data[] f, double xi)
     {
-
         for (Data data:f) {
             lagrangeMethodHashMap.put(data.x,data.y);
         }
