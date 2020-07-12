@@ -1,3 +1,5 @@
+
+
 import java.util.HashMap;
 import java.util.function.Function;
 
@@ -51,20 +53,6 @@ public class Lagrange_Method  {
 
         }
         return result1;
-    }
-
-    // Driver code
-    public static void main(String[] args)
-    {
-        calculateLagrange();
-    }
-    public static void calculateLagrange(){
-        Data[] f ={new Data(3, 1), new Data(7, 47), new Data(11, 670),
-                new Data(14, 1529), new Data(17, 3629), new Data(20, 9217),
-                new Data(25, 20921), new Data(30, 38226), new Data(35, 61049),
-                new Data(40, 82329), new Data(42, 90980), new Data(43, 95591)};
-
-        System.out.print("\n"+(int)interpolate(f, 37));
     }
 }
 

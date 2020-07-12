@@ -1,3 +1,4 @@
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -107,9 +108,17 @@ public class Controller implements Initializable {
         Direct_Method.calculateLinear();
         plotLine(Direct_Method.directMethodFunction,Direct_Method.directMethodHasHMap);
     }
+    public static void calculateLagrange(){
+        Lagrange_Method.Data[] f ={new Lagrange_Method.Data(3, 1), new Lagrange_Method.Data(7, 47), new Lagrange_Method.Data(11, 670),
+                new Lagrange_Method.Data(14, 1529), new Lagrange_Method.Data(17, 3629), new Lagrange_Method.Data(20, 9217),
+                new Lagrange_Method.Data(25, 20921), new Lagrange_Method.Data(30, 38226), new Lagrange_Method.Data(35, 61049),
+                new Lagrange_Method.Data(40, 82329), new Lagrange_Method.Data(42, 90980), new Lagrange_Method.Data(43, 95591)};
+
+        System.out.print("\n"+(int) Lagrange_Method.interpolate(f, 37));
+    }
 
     public void LagrangeMethod(ActionEvent actionEvent) {
-        Lagrange_Method.calculateLagrange();
+       calculateLagrange();
         plotLine(Lagrange_Method.lagrangeFunction,Lagrange_Method.lagrangeMethodHashMap);
     }
 

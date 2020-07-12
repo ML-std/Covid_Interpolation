@@ -1,3 +1,4 @@
+
 import javafx.scene.chart.XYChart;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public class MyGraph {
     }
 
     public void plotLine(final Function<Double, Double> function, HashMap<Double, Double> data) {
-        final XYChart.Series<Double, Double> series = new XYChart.Series<Double, Double>();
+        final XYChart.Series<Double, Double> series = new XYChart.Series<>();
 
         for (double x = -range; x <= range; x = x + 0.02) {
             plotPoint(x, function.apply(x), series);
@@ -24,7 +25,7 @@ public class MyGraph {
         }
         graph.getData().add(series);
         for (Map.Entry<Double, Double> mapElement : data.entrySet()) {
-            XYChart.Series<Double, Double> series2 = new XYChart.Series<Double, Double>();
+            XYChart.Series<Double, Double> series2 = new XYChart.Series<>();
             double x = mapElement.getKey();
             double y = mapElement.getValue();
             plotPoint(x,y,series2);
@@ -36,7 +37,7 @@ public class MyGraph {
 
     public void plotPoint(final double x, final double y,
                            final XYChart.Series<Double, Double> series) {
-        series.getData().add(new XYChart.Data<Double, Double>(x, y));
+        series.getData().add(new XYChart.Data<>(x, y));
     }
 
     public void clear() {
